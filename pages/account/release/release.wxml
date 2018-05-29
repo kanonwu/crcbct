@@ -1,0 +1,42 @@
+<import src="../../../style/footer.wxml" />
+
+<view class="page">
+    <view class="page__hd i-header">
+        <view class="g-bd">
+            <view></view>
+            <view class="g-bda">
+                <view bindtap="" class="g-bda-userinfo">
+                <open-data class="userinfo-avatar" type="userAvatarUrl"></open-data> 
+                <open-data class="userinfo-nickname" type="userNickName"></open-data>
+                    <!-- <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image> -->
+                    <!-- <text class="userinfo-nickname">{{userInfo.nickName}}</text> -->
+                    <text class="userinfo-nickname">{{realName}}  {{phoneNumber}}</text>
+                </view>
+            </view>
+        </view>
+    </view>
+  <scroll-view lower-threshold="800" bindscrolltolower="pullUpLoad" upper-threshold="0" scroll-y="true" style="height: {{500}}px;  ">
+    <view class="page__bd">
+      <view class="weui-panel">
+      <view class="ycList">上月统计  早餐：{{breakFastCount_1}}   午餐：{{lunchCount_1}}  晚餐：{{supperCount_1}}  </view>
+      <view class="ycList">本月统计  早餐：{{breakFastCount_2}}   午餐：{{lunchCount_2}}  晚餐：{{supperCount_2}}  </view>
+
+      
+      </view>
+
+      <!--<button type="primary" bindtap="toAddDiary" hover-class="other-button-hover"> 增加日记 </button>-->
+      <view class="weui-panel">
+        <view class="ycList">用餐记录</view>
+        <view class="weui-panel__bd">
+           <view>
+            <view class='ycList' wx:for="{{ycRecord}}" wx:key="*this" wx:for-index="idx" style='margin-left:20px; margin-top:10px'>
+                 {{idx+1}}、     {{item.ctName}}   {{item.realName}}    {{item.createdAt}}
+            </view>
+          </view>
+
+        </view>
+      </view>
+    </view>
+
+  </scroll-view>
+</view>

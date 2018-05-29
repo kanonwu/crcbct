@@ -1,0 +1,66 @@
+<!--pages/ct/yc/yc.wxml-->
+
+
+<!-- 如果只是展示用户头像昵称，可以使用 <open-data /> 组件 -->
+<!-- <open-data type="userAvatarUrl"></open-data>
+<open-data type="userNickName"></open-data> -->
+<!-- 需要使用 button 来授权登录 -->
+<!-- <button wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录</button>
+<view wx:else>请升级微信版本</view> -->
+
+<view class="page__bd">
+    <view class="page__hd i-header">
+            <view class="i-header-h1">{{ctName}}餐厅</view>
+        <view class="i-header-h1 h50">早餐  报餐人数: {{zcOrderCount}},  已用餐人数：{{zcYcCount}}</view>
+        <view class="i-header-h1">午餐  报餐人数：{{wcOrderCount}},  已用餐人数： {{wcYcCount}}</view>
+    </view>
+    <form bindsubmit="saveNamePhone" bindreset="formReset" wx:if="{{inputInfo}}">
+        <view class="weui-cells__title" wx:if="{{!canIUse}}">请升级微信版本</view>
+        
+        <view class="weui-cells__title">请先完善个人信息，输入手机号码和真实姓名</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">姓名：</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input class="weui-input" placeholder="请输入您的真实姓名" name="realName" value='{{realName}}' />
+                </view>
+            </view>
+
+
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">手机号码</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input class="weui-input" placeholder="请输入您的手机号码" type="number" name="phoneNumber"  value='{{phoneNumber}}' />
+                </view>
+            </view>
+
+        </view>
+        <view class="weui-cells__tips">请如实填写姓名和手机号码，输入后不可修改。</view>
+
+
+
+        <view class="weui-btn-area"  >
+            <button wx:if="{{canIUse}}" class="weui-btn" open-type="getUserInfo" type="primary" bindgetuserinfo="saveNamePhone" formType="submit" >确定</button>
+            <view wx:else>请升级微信版本</view>
+        </view>
+    </form>
+
+          <view class="weui-btn-area" wx:if="{{!inputInfo}}">
+            <button class="weui-btn" type="primary"  bindtap="scanYcCode" wx:if="{{1}}" >扫码用餐</button>
+          <view>
+          <view class="ycList">今日用餐记录</view>
+          <view>
+            <view class='ycList' wx:key="*this" wx:for="{{todayRecord}}" wx:for-index="idx" >
+                  {{idx+1}}     {{item.ctName}}   {{item.realName}}    {{item.updatedAt}}
+            </view>
+          </view>
+        </view>
+        </view>
+
+</view>
+
+

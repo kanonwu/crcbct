@@ -1,0 +1,40 @@
+<!--pages/ct/calendar.wxml-->
+<view class='bc eatType'>
+  <label  style='margin-left: 20%;' >说明：日期变色表示已报餐成功</label>
+</view>
+<view>
+  <radio-group bindchange="selYcType" class="eatType" >
+  <label class="radio" style='margin-left: 30%;' >
+    <radio value="1" checked="false"/>早餐
+  </label>
+    <label class="radio" >
+    <radio value="2" checked="true"/>午餐
+  </label>
+
+</radio-group>
+</view>
+
+<view class="headbox">
+  <view class="headdate">日</view>
+  <view class="headdate">一</view>
+  <view class="headdate">二</view>
+  <view class="headdate">三</view>
+  <view class="headdate">四</view>
+  <view class="headdate">五</view>
+  <view class="headdate">六</view>
+</view>
+<view class="mouth" wx:for="{{dates}}" wx:key="*this" wx:for-item="date" wx:for-index="mIndex">
+  <view class="mouthhead">{{date[mIndex].year}}年{{date[mIndex].month}}月</view>
+  <view class="daybox">
+  <view class="day" wx:if="{{weeks[mIndex]>0}}"> </view>
+  <view class="day" wx:if="{{weeks[mIndex]>1}}"> </view>
+  <view class="day" wx:if="{{weeks[mIndex]>2}}"> </view>
+  <view class="day" wx:if="{{weeks[mIndex]>3}}"> </view>
+  <view class="day" wx:if="{{weeks[mIndex]>4}}"> </view>
+  <view class="day" wx:if="{{weeks[mIndex]>5}}"> </view>
+  <view class="day" wx:if="{{weeks[mIndex]>6}}"> </view>
+  <view class="day {{item.selected == 1 ? 'bc':''}}" wx:for="{{date}}" wx:key="*this" wx:for-index="idx" data-mindex="{{mIndex}}" data-dindex="{{idx}}" bindtap="selectday">    
+    {{date[idx].day}}   
+  </view>
+  </view>
+</view>

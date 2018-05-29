@@ -1,0 +1,111 @@
+/* pages/calendar/calendar.wxss */
+.headdate{
+  height: 30px;
+  background-color: white;
+  flex:1;
+  text-align: center;
+  line-height: 30px;
+}
+
+.eatType{
+  display: flex;
+  display: -webkit-flex;
+  border-bottom: 1px solid #e5e5e5;
+  text-align: center;
+  
+  
+  line-height: 80rpx;
+}
+
+.radio{
+  
+  margin-right:20px;
+}
+
+
+.headbox{
+  display: flex;
+  display: -webkit-flex;
+  border-bottom: 1px solid #e5e5e5;
+}
+.headbox2{
+  display: flex;
+  position: fixed;
+  width: 750rpx;
+  display: -webkit-flex;
+  border-bottom: 1px solid #e5e5e5;
+  background-color: white;
+  z-index: 2;
+}
+.mouthhead{
+  height: 88rpx;
+  background-color: #f4f4f4;
+  width: 750rpx;
+  line-height: 88rpx;
+  text-align: center;
+  font-size: 40rpx;
+}
+.mouth{
+   /* background-color: white; */
+  /* padding-top: 10rpx;
+  padding-bottom: 10rpx;  */
+}
+.daybox{
+
+   background-color: white; 
+   padding-top: 5rpx;
+   padding-bottom: 10rpx;   
+
+}
+.day{
+  width: 107rpx;
+  height: 62rpx;
+  line-height: 62rpx;
+  text-align: center;
+  display: inline-block;
+  position: relative;
+  
+  margin-top: 0rpx;
+  overflow: hidden;
+  color: #353535;
+  font-size: 38rpx;
+  
+}
+.day2{
+  color: #04babe;
+  width: 107rpx;
+  height: 107rpx;
+  line-height: 107rpx;
+  text-align: center;
+  display: inline-block;
+  position: relative;
+  bottom: 0;
+  margin-top: 0;
+}
+.actname{
+  color: #04babe;
+  position: absolute;
+  font-size: 20rpx;
+  top: -30rpx;
+  width: 107rpx;
+  text-align: center;
+}
+.actname2{
+  color: #04babe;
+  position: absolute;
+  font-size: 20rpx;
+  bottom: -30rpx;
+  width: 107rpx;
+  text-align: center;
+}
+.bc{
+  background-color: #04babe;
+  color: white!important;
+}
+.bc2{
+  color: white!important;
+}
+.none88{
+  height: 88rpx;
+  width: 750rpx;
+}

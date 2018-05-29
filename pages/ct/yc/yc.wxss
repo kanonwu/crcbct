@@ -1,0 +1,9 @@
+/* pages/ct/yc/yc.wxss */
+
+.ycList {
+  padding: 14px 15px 10px;
+  
+  font-size: 15px;
+  position: relative;
+  border-bottom: 1rpx solid #E5E5E5;
+}

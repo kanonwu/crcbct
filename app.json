@@ -1,0 +1,45 @@
+{
+  "pages": [
+    "pages/ct/yc/yc",
+    "pages/ct/yc/index",
+    "pages/account/account",
+    "pages/account/feedback/feedback",
+    "pages/account/release/release",
+    "pages/getOpenId/getOpenId",
+    "pages/ct/calendar/calendar",
+    "pages/ct/index/index"
+
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#3891f8",
+    "navigationBarTitleText": "岑溪农商行餐厅",
+    "navigationBarTextStyle": "#fff"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#318efb",
+    "borderStyle": "#3891f8",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/ct/yc/yc",
+        "iconPath": "image/icon_component.png",
+        "selectedIconPath": "image/icon_component_HL.png",
+        "text": "扫码用餐"
+      },
+      {
+        "pagePath": "pages/ct/calendar/calendar",
+        "iconPath": "image/list.png",
+        "selectedIconPath": "image/list1.png",
+        "text": "报餐"
+      },
+      {
+        "pagePath": "pages/account/account",
+        "iconPath": "image/wechat.png",
+        "selectedIconPath": "image/wechatHL.png",
+        "text": "我"
+      }
+    ]
+  }
+}
