@@ -69,7 +69,7 @@ Page({
   },
 
 
-//查询报餐人数
+//查询报餐和用餐人数
   setCount: function(){
     var that = this;
     var YcOrder = Bmob.Object.extend("YcOrder");
@@ -82,10 +82,14 @@ Page({
 
     let month = date.getMonth() + 1//当前月份
     let day = date.getDate()//当天
+
+    var ctCode = wx.getStorageSync("ctCode");
+    var ctName = wx.getStorageSync("ctName");
     
 
-    //查询报餐
+    //查询报餐 早餐
     var query = new Bmob.Query(YcOrder);
+    query.equalTo("ctCode", ctCode);
     query.equalTo("year", year);
     query.equalTo("month", month);
     query.equalTo("day", day);
@@ -100,7 +104,9 @@ Page({
       }
     })
 
+  //查询午餐报餐人数
     query = new Bmob.Query(YcOrder);
+    query.equalTo("ctCode", ctCode);
     query.equalTo("year", year);
     query.equalTo("month", month);
     query.equalTo("day", day);
@@ -123,10 +129,11 @@ Page({
     var now = new Date();
     var today = util.formatDay(now, "-");
 
-  //早餐 0点到9点 
+  //早餐 
+    queryRecord.equalTo("ctCode", ctCode);
     queryRecord.equalTo("$and", [{ "createdAt": { "$gte": { "__type": "Date", "iso": today + "  00:00:00" } } }, { "createdAt": { "$lte": { "__type": "Date", "iso": today + " 23:59:59" } } }]);
     //queryRecord.equalTo("ctCode", "4000");
-    queryRecord.containedIn("ctCode",["4000", "4005", "4006", "4007", "4008", "4038", "4050", "4051"]);
+    //queryRecord.containedIn("ctCode",["4000", "4005", "4006", "4007", "4008", "4038", "4050", "4051"]);
     queryRecord.equalTo("ycType", BREAKFAST);
     
     queryRecord.count({
@@ -140,7 +147,8 @@ Page({
       queryRecord = new Bmob.Query(YcRecord);
       //午餐 10点到15点59
       //queryRecord.equalTo("ctCode", "4000");
-      queryRecord.containedIn("ctCode",["4000", "4005", "4006", "4007", "4008", "4038", "4050", "4051"]);
+      queryRecord.equalTo("ctCode", ctCode);
+      //queryRecord.containedIn("ctCode",["4000", "4005", "4006", "4007", "4008", "4038", "4050", "4051"]);
       queryRecord.equalTo("$and", [{ "createdAt": { "$gte": { "__type": "Date", "iso": today + "  00:00:00" } } }, { "createdAt": { "$lte": { "__type": "Date", "iso": today + " 23:59:59" } } }]);
       queryRecord.equalTo("ycType", LUNCH);
       queryRecord.count({
@@ -150,21 +158,19 @@ Page({
           })
         }
       })
-
-
-
-    
+   
   },
 
+//解码二维码
   decodeQrCode: function(qrCode){
     var str = "";
     for (var i = 0; i < ctCodeIndex.length; i++) {
       str = str + qrCode.substring(ctCodeIndex[i], ctCodeIndex[i]+1);
     }
     return str;
-
   },
 
+//得到二维码字符串
   getCtQrCode:function (len, indexs, values) {
     var charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var randomString = '';
@@ -187,8 +193,6 @@ Page({
     var that = this;
     var td = new Array();
     var user = Bmob.User.current();
-    //console.log("current user =", user);
-    //console.log("current user.attributes.authData.weapp.openid =", user.attributes.authData.weapp.openid);
     if (typeof(user.id) === undefined){
       return;
     }
@@ -274,6 +278,18 @@ Page({
 
   },
 
+//检查是否是总行餐厅
+isCenterCt: function(ctCode){
+    var centerCodes = ["4000", "4005", "4006", "4007", "4008", "4038", "4050", "4051"];
+    for (var i = 0; i < centerCodes.length; i++) {
+      if(ctCode == centerCodes[i]){
+        return true;
+      }
+    }
+
+    return false;
+},
+
 //初始化所属餐厅
 initBelongCt: function(){
   var that = this;
@@ -301,6 +317,10 @@ initBelongCt: function(){
           var record = results[0];
           actCode = record.get("ctCode");
           actName = record.get("ctName");
+          if(that.isCenterCt(actCode)){
+            actCode = 4000;
+            actName = "总行";
+          }
         }
         that.setData({ ctCode: actCode, ctName: actName });
       },
@@ -309,6 +329,11 @@ initBelongCt: function(){
       }
     });
   }else{
+    if (that.isCenterCt(actCode)) {
+      actCode = 4000;
+      actName = "总行";
+    }
+
     that.setData({ ctCode: actCode, ctName: actName });
   }
 },
@@ -317,8 +342,6 @@ initBelongCt: function(){
    * 生命周期函数--监听页面加载
    */
   onShow: function ( ) {
-    
-
     var that = this;
     //检查姓名和手机号码是否已填写
     var cuser = Bmob.User.current();
@@ -341,8 +364,8 @@ initBelongCt: function(){
               if (realName) {
                 that.setData({ inputInfo: false });
               }
-              that.updateTodayRecord();
               that.initBelongCt();
+              that.updateTodayRecord();
             },
             function (err) {
               console.log("登陆失败", err);
@@ -368,9 +391,8 @@ initBelongCt: function(){
 
         that.setData({ inputInfo: false });
       }
-      that.updateTodayRecord();
       that.initBelongCt();
-
+      that.updateTodayRecord();
     }
   },
   
@@ -403,8 +425,6 @@ initBelongCt: function(){
           console.log("查询失败");
         }
       });
-
-
       return;
     }
 
@@ -531,11 +551,7 @@ initBelongCt: function(){
             common.showTip("扫码成功请用餐", "请用餐");
           }
         })
-
-          
- 
-
-        },
+      },
       fail: function(res) {},
       complete: function(res) {
         console.log("scan complete", res);
@@ -559,8 +575,6 @@ initBelongCt: function(){
     if (actName != lastCtName){
       wx.setStorageSync("ctName", actName);
     }
-
-    
     this.setData(
       { ctCode: actCode, ctName: actName}
     )
@@ -602,8 +616,8 @@ initBelongCt: function(){
       success : function(result){
         // 添加成功，返回成功之后的objectId（注意：返回的属性名字是id，不是objectId），你还可以在Bmob的Web管理后台看到对应的数据
         console.log("用餐记录成功, objectId:" + result.id);
-        that.updateTodayRecord();
         that.setBelongCt(ctCode, ctName);
+        that.updateTodayRecord();
       },
       error : function(result, error){
         // 添加失败

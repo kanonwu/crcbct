@@ -1,14 +1,10 @@
 {
   "pages": [
     "pages/ct/yc/yc",
-    "pages/ct/yc/index",
     "pages/account/account",
     "pages/account/feedback/feedback",
     "pages/account/release/release",
-    "pages/getOpenId/getOpenId",
-    "pages/ct/calendar/calendar",
-    "pages/ct/index/index"
-
+    "pages/ct/calendar/calendar"
   ],
   "window": {
     "backgroundTextStyle": "light",
